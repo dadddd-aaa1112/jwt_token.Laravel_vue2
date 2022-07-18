@@ -5,6 +5,8 @@
         <input type="email" v-model="email">
         <input type="password" v-model="password">
         <button @click="loginUser">login</button>
+        <p v-if="error" class="text-danger">{{this.error}}</p>
+
     </div>
 </div>
 </template>
@@ -16,7 +18,8 @@ export default {
     data() {
         return {
             email: null,
-            password: null
+            password: null,
+            error: null
         }
     },
     methods: {
@@ -28,6 +31,9 @@ export default {
                 .then(res => {
                     localStorage.setItem('access_token', res.data.access_token)
                     this.$router.push({name: 'fruit.index'})
+                })
+                .catch(error => {
+                    this.error = error.response.data.error
                 })
 
         }

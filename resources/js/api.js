@@ -31,11 +31,11 @@ api.interceptors.response.use(config => {
             return api.request(error.config)
         })
     }
-    // if (error.response.status === 401) {
-    //     router.push({
-    //         name: 'user.login'
-    //     })
-    // }
+    if (error.response.status === 401) {
+        router.push({
+            name: 'user.login'
+        })
+    }
 })
 
 export default api

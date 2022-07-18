@@ -8,6 +8,7 @@
             <input type="password" placeholder="password" v-model="password">
             <input type="password" placeholder="password confirmed" v-model="password_confirm">
             <button @click="registerUser">register</button>
+            <p v-if="error" class="text-danger">{{this.error}}</p>
         </div>
     </div>
 </template>
@@ -22,7 +23,8 @@ export default {
             name: null,
             email: null,
             password: null,
-            password_confirm: null
+            password_confirm: null,
+            error: null
         }
     },
     methods: {
@@ -35,8 +37,11 @@ export default {
                 password_confirmation: this.password_confirm
             })
                 .then(res => {
-                    console.log(res)
-                    // this.$router.push({name: 'user.login'})
+                    localStorage.setItem('access_token', res.data.access_token)
+                    this.$router.push({name: 'user.personal'})
+                })
+                .catch(error => {
+                    this.error = error.response.data.error
                 })
         }
     }
